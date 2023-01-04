@@ -1,0 +1,17 @@
+#FROM openjdk:8-jdk-alpine
+FROM centos:latest
+RUN yum update -y python3
+RUN yum install -y librepo
+RUN yum install -y tar
+RUN yum install -y curl
+RUN yum install -y telnet
+ARG JAR_FILE=target/sb-ne-apollo-0.0.1.jar
+COPY ${JAR_FILE} sb-ne-apollo.jar
+#COPY glowroot /glowroot
+COPY /datadog/dd-java-agent-0.76.0.jar  /datadog/dd-java-agent-0.76.0.jar
+COPY jdk1.8.0_151.tar /
+RUN tar -xvf jdk1.8.0_151.tar
+RUN rm -rf jdk1.8.0_151.tar
+RUN chmod -R 775 /jdk1.8.0_151
+#ENTRYPOINT ["/jdk1.8.0_151/bin/java","-javaagent:/glowroot/glowroot.jar","-Dglowroot.agent.id=sb-ne-vzw","-jar","/sb-ne-apollo.jar","--spring.config.location=application.properties"]
+ENTRYPOINT ["/jdk1.8.0_151/bin/java","-javaagent:/datadog/dd-java-agent-0.76.0.jar","-jar","/sb-ne-apollo.jar","--spring.config.location=application.properties"]

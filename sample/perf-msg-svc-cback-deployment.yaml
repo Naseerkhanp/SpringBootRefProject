@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "msg-svc-cback-deployment"
+  namespace: "default"
+spec:
+  selector:
+    matchLabels:
+      app: "msg-svc-cback"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "msg-svc-cback"
+    spec:
+      hostname: msg-svc-cback-service
+      volumes:
+      - name: perf-msg-svc-cback-properties
+        configMap:
+          name: perf-msg-svc-cback-properties
+          defaultMode: 0775
+      containers:
+      - image: 197504309469.dkr.ecr.us-east-1.amazonaws.com/nsl_perf:imagename
+        imagePullPolicy: Always
+        name: "msg-svc-cback"
+        ports:
+        - containerPort: 9605
+        - containerPort: 4024
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+        volumeMounts:
+        - mountPath: /application.properties
+          subPath: application.properties
+          name: perf-msg-svc-cback-properties

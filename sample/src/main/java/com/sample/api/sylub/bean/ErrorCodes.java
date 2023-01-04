@@ -1,0 +1,18 @@
+package com.excelacom.century.apolloneoutbound.bean;
+
+public enum ErrorCodes {
+	CECC0001("CECC-0001"),CECC0002("CECC-0002"),CECC0003("CECC-0003"), CECC0004("CECC-0004"), CECC0005("CECC-0005"), CECC0006("CECC-0006"), CECC0007("CECC-0007"),
+	CECC0008("CECC-0008"), CECC0009("CECC-0009"), CECC0010("CECC-0010"), CECC0011("CECC-0011"), CECC0012("CECC-0012"),
+	CECC0013("CECC-0013"), CECC0014("CECC-0014"), CECC0015("CECC-0015"),CECC0016("CECC-0016"),CECC0017("CECC-0017"),
+	CECC0018("CECC-0018"),CECC0019("CECC-0019"),CECC0020("CECC-0020"),CECC0021("CECC-0021"),CECC0022("CECC-0022");
+
+	private String errorCode;
+
+	private ErrorCodes(String s) {
+		errorCode = s;
+	}
+
+	public String toString() {
+		return this.errorCode;
+	}
+}
